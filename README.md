@@ -1,3 +1,19 @@
+关于 http 权威指南 提到的 HTTP 隧道(Tunnel)：
+
+	“隧道是建立起来以后，就会在两条连接之间对原始数据进行盲转发的http应用程序"
+
+全节看完，依旧不清不楚，却挠到痒处。
+
+
+故，我又把一个叫做 [node-http-tunnel](https://github.com/1000copy/node-http-tunnel) 的源代码看了一遍。反正也不花什么时间（其实还是花了2天的）
+
+node-http-tunnel 提供了两个组件,首先把它启动起来。为了方便 client ,server,tunnel-client,tunnel-server 都在一个电脑上，端口各不相同。因为只是测试性的启动，node-http-tunnel有一个mode参数，可以指定为development。这个模式下，端口的默认是一致的。从而方便两个组件的配合。
+
+我也准备了一个简单的tcp server,一个tcp client 。tcp client会发送一个字符串给tcp server ,后者不管接到什么字符串，都会在前面加上一个server echo 返回来。
+
+它们本来可以直接采用tcp通讯，因为我们假设有防火墙只允许80，故而这两个程序无法直接通讯。我们来看如何经过tunnel 组件把它们用http连接起来。
+
+
 # simplized labs:
 
 以发送一个数字1，一直到得到一个server echo:1为止，分析执行的过程。
@@ -96,17 +112,3 @@ tunnel-server
    得到数据，如果是open ,就建立到tcp server的连接
    如果是data，就解压，得到原生内容，发给tcp server
    如果tcp server来数据，编码为json,通知对应的tunnel client
-
-
-
-
-	   					
-
-
-
-
-
-
-
-
-
