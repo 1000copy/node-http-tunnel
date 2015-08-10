@@ -1,5 +1,7 @@
 # simplized labs:
 
+以发送一个数字1，一直到得到一个server echo:1为止，分析执行的过程。
+
 准备：
 1. client ,server,tunnel-client,tunnel-server 都在一个电脑上
 2. 启动 server,一个tcp server
@@ -84,7 +86,7 @@ YES ! 拍照留念
 tunnel-client
 
    创建侦听一个socks5服务，等待tcp client连接
-   要求tunnel server 建立一个到指定host,port的连接
+   收到tcp client 的数据后，立即要求tunnel server 建立一个到指定host,port的连接
    完毕后，打包tcp data为 base64 的json包
    通过http发送到tunnel server
    收到tunnel server回复（在send_quene内），解包转发到tcp client
